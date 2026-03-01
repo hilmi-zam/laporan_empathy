@@ -36,7 +36,8 @@
 **Profil singkat user yang akan diwawancarai:**
 *(Contoh: Mahasiswa semester 3 yang kos dan tidak punya kendaraan)*
 
-> Jawaban:
+1. Mahasiswa semester 4 TRPL yang kos, tidak punya kendaraan, project-based, cukup sering ke perpustakaan
+2. Mahasiswa semester 2 Perhotelan yang tinggal dengan orang tua, punya kendaraan, jarang sering ke perpustakaan
 
 ---
 
@@ -61,34 +62,47 @@ Susun minimal 5 pertanyaan non-leading sebelum turun ke lapangan:
 
 | Aspek                   | Catatan |
 | ----------------------- | ------- |
-| Nama / Inisial          |         |
-| Latar Belakang Singkat  |         |
-| Temuan Penting 1        |         |
-| Temuan Penting 2        |         |
-| Kutipan Kuat*(quote)* |         |
+| Nama / Inisial          | Hilma Ayu Sholiha |
+| Latar Belakang Singkat  | Mahasiswa semester 4 TRPL yang tinggal di rumah, jarang menggunakan perpustakaan (2x per bulan) |
+| Temuan Penting 1        | Suasana perpustakaan yang suram dan kurang estetik membuat mahasiswa kurang nyaman dan tertarik |
+| Temuan Penting 2        | Sistem informasi perpustakaan tidak efektif karena tidak ada fitur kategori dan pencarian eksploratif |
+| Kutipan Kuat*(quote)* | "Karena dengan fitur eksploratif mahasiswa bisa mengetahui buku apa saja yang tersedia dan mendapatkan rekomendasi buku yang sebelumnya belum diketahui." |
 
 **▸ Responden 2**
 
 | Aspek                   | Catatan |
 | ----------------------- | ------- |
-| Nama / Inisial          |         |
-| Latar Belakang Singkat  |         |
-| Temuan Penting 1        |         |
-| Temuan Penting 2        |         |
-| Kutipan Kuat*(quote)* |         |
+| Nama / Inisial          | Dika Aliyanto|
+| Latar Belakang Singkat  | Mahasiswa semester 2 Perhotelan yang tinggal dengan orang tua, punya kendaraan, jarang ke perpustakaan (2x per semester) |
+| Temuan Penting 1        | Mahasiswa lebih memilih belajar di kos atau kantin karena dapat makan/minum sambil belajar |
+| Temuan Penting 2        | Aturan perpustakaan yang melarang makan dan minum menjadi hambatan utama untuk belajar di perpustakaan |
+| Kutipan Kuat*(quote)* | "Karena itu menjadi waktu istirahat dari mengerjakan tugas" dan "Di perpustakaan tidak mendukung makan maupun minum di ruangan" |
 
 ---
 
 ## 🔍 Analisis 5 Whys
 
+**▸ Responden 1 (Hilma Ayu Sholiha)**
+
 | Tahapan                        | Temuan |
 | ------------------------------ | ------ |
-| Masalah permukaan              |        |
-| Why 1                          |        |
-| Why 2                          |        |
-| Why 3                          |        |
-| Why 4                          |        |
-| 🎯**ROOT CAUSE (Why 5)** |        |
+| Masalah permukaan              | Mahasiswa jarang menggunakan perpustakaan (2x per bulan) |
+| Why 1                          | Suasana perpustakaan suram dan kurang estetik |
+| Why 2                          | Suasana yang tidak nyaman dan menarik mempengaruhi keinginan berkunjung |
+| Why 3                          | Sistem informasi perpustakaan tidak memberikan informasi buku secara optimal |
+| Why 4                          | Tidak ada fitur kategori dan fitur pencarian tidak membantu jika tidak tahu judul buku |
+| 🎯**ROOT CAUSE (Why 5)** | Sistem perpustakaan memerlukan fitur kategori dan pencarian eksploratif agar mahasiswa dapat menemukan dan mendapat rekomendasi buku baru |
+
+**▸ Responden 2 (Dika Aliyanto)**
+
+| Tahapan                        | Temuan |
+| ------------------------------ | ------ |
+| Masalah permukaan              | Mahasiswa jarang ke perpustakaan (2x per semester) |
+| Why 1                          | Lebih memilih belajar di kos atau kantin daripada perpustakaan |
+| Why 2                          | Kos dan kantin memberikan kenyamanan untuk makan/minum saat belajar |
+| Why 3                          | Makan dan minum merupakan waktu istirahat penting dari mengerjakan tugas |
+| Why 4                          | Perpustakaan memiliki aturan yang melarang makan dan minum di ruangan |
+| 🎯**ROOT CAUSE (Why 5)** | Perpustakaan memerlukan area yang lebih fleksibel yang mengizinkan mahasiswa makan/minum dan beristirahat sambil belajar |
 
 ---
 
