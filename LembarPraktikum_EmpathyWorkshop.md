@@ -37,7 +37,7 @@
 *(Contoh: Mahasiswa semester 3 yang kos dan tidak punya kendaraan)*
 
 1. Mahasiswa semester 4 TRPL yang kos, tidak punya kendaraan, project-based, cukup sering ke perpustakaan
-2. Mahasiswa semester 2 Perhotelan yang tinggal dengan orang tua, punya kendaraan, jarang sering ke perpustakaan
+2. Mahasiswa semester 2 Teknik Sipil yang tinggal di rumah, punya kendaraan, jarang ke perpustakaan karena jam operasional
 
 ---
 
@@ -72,11 +72,11 @@ Susun minimal 5 pertanyaan non-leading sebelum turun ke lapangan:
 
 | Aspek                   | Catatan |
 | ----------------------- | ------- |
-| Nama / Inisial          | Dika Aliyanto|
-| Latar Belakang Singkat  | Mahasiswa semester 2 Perhotelan yang tinggal dengan orang tua, punya kendaraan, jarang ke perpustakaan (2x per semester) |
-| Temuan Penting 1        | Mahasiswa lebih memilih belajar di kos atau kantin karena dapat makan/minum sambil belajar |
-| Temuan Penting 2        | Aturan perpustakaan yang melarang makan dan minum menjadi hambatan utama untuk belajar di perpustakaan |
-| Kutipan Kuat*(quote)* | "Karena itu menjadi waktu istirahat dari mengerjakan tugas" dan "Di perpustakaan tidak mendukung makan maupun minum di ruangan" |
+| Nama / Inisial          | Hadi Arindra (HA) |
+| Latar Belakang Singkat  | Mahasiswa semester 2 Teknik Sipil yang tinggal di rumah, punya kendaraan, jarang ke perpustakaan (2x per semester) |
+| Temuan Penting 1        | Jam operasional perpustakaan sangat terbatas - tutup saat istirahat (12:00-13:00) dan sudah tutup jam 16:00, bertabrakan dengan jadwal kuliah |
+| Temuan Penting 2        | Pada hari kosong (tidak ada kuliah), mahasiswa merasa tidak worth it cuma untuk ke perpustakaan saja tanpa aktivitas kuliah yang mendesak |
+| Kutipan Kuat*(quote)* | "Jam operasional perpustakaan tidak fleksibel dan tidak sesuai dengan jam kuliah saya" dan "Kalau hari kosong, tidak ada matkul sama sekali, ngga worth it kalau cuma ke perpus" |
 
 ---
 
@@ -93,32 +93,52 @@ Susun minimal 5 pertanyaan non-leading sebelum turun ke lapangan:
 | Why 4                          | Tidak ada fitur kategori dan fitur pencarian tidak membantu jika tidak tahu judul buku |
 | 🎯**ROOT CAUSE (Why 5)** | Sistem perpustakaan memerlukan fitur kategori dan pencarian eksploratif agar mahasiswa dapat menemukan dan mendapat rekomendasi buku baru |
 
-**▸ Responden 2 (Dika Aliyanto)**
+**▸ Responden 2 (Hadi Arindra)**
 
 | Tahapan                        | Temuan |
 | ------------------------------ | ------ |
 | Masalah permukaan              | Mahasiswa jarang ke perpustakaan (2x per semester) |
-| Why 1                          | Lebih memilih belajar di kos atau kantin daripada perpustakaan |
-| Why 2                          | Kos dan kantin memberikan kenyamanan untuk makan/minum saat belajar |
-| Why 3                          | Makan dan minum merupakan waktu istirahat penting dari mengerjakan tugas |
-| Why 4                          | Perpustakaan memiliki aturan yang melarang makan dan minum di ruangan |
-| 🎯**ROOT CAUSE (Why 5)** | Perpustakaan memerlukan area yang lebih fleksibel yang mengizinkan mahasiswa makan/minum dan beristirahat sambil belajar |
+| Why 1                          | Jam operasional perpustakaan tidak sesuai dengan jadwal kuliah mahasiswa |
+| Why 2                          | Perpustakaan tutup saat jam istirahat (12:00-13:00) dan tutup jam 16:00, sedangkan kuliah berlangsung di waktu-waktu tersebut |
+| Why 3                          | Mahasiswa tidak punya waktu luang yang tepat untuk mengunjungi perpustakaan selama hari dilakukan kuliah |
+| Why 4                          | Pada hari kosong (tidak ada kuliah), mahasiswa merasa kunjungan ke perpustakaan tidak worth it hanya untuk browsing tanpa keperluan mendesak |
+| 🎯**ROOT CAUSE (Why 5)** | Perpustakaan memerlukan jam operasional yang lebih fleksibel/diperpanjang agar sesuai dengan jadwal kuliah mahasiswa dan memberikan motivasi untuk berkunjung |
 
 ---
 
 ## 🗺️ Empathy Map
+
+### **▸ Responden 1: Hilma Ayu Sholiha**
 
 *Isi berdasarkan temuan wawancara, lalu buat ulang secara visual di Figma.*
 
 |                      | **SAYS** 💬            | **THINKS** 💭                |
 | -------------------- | ---------------------------- | ---------------------------------- |
 | *Apa yang user …* | *katakan secara langsung?* | *pikirkan tapi tidak diucapkan?* |
-| **Temuan:**    |                              |                                    |
+| **Temuan:**    | "Suasana perpustakaan suram dan kurang estetik" "Dengan fitur pencarian yang baik saya bisa menemukan buku yang tidak pernah saya ketahui sebelumnya" | Perpustakaan seharusnya lebih menarik dan nyaman untuk dikunjungi. Ingin sistem yang memudahkan menemukan buku baru secara serendipiti. |
 
 |                      | **DOES** ⚡             | **FEELS** ❤️          |
 | -------------------- | ----------------------------- | ----------------------------- |
 | *Apa yang user …* | *lakukan / tindakan nyata?* | *rasakan secara emosional?* |
-| **Temuan:**    |                               |                               |
+| **Temuan:**    | Jarang mengunjungi perpustakaan (2x per bulan), mencari buku hanya jika tahu judul pasti, lebih sering browsing online untuk referensi | Kurang tertarik, kurang nyaman, frustasi dengan sistem pencarian yang tidak membantu menemukan buku baru |
+
+> **Link Figma:** _______________________________________________
+
+---
+
+### **▸ Responden 2: Hadi Arindra**
+
+*Isi berdasarkan temuan wawancara, lalu buat ulang secara visual di Figma.*
+
+|                      | **SAYS** 💬            | **THINKS** 💭                |
+| -------------------- | ---------------------------- | ---------------------------------- |
+| *Apa yang user …* | *katakan secara langsung?* | *pikirkan tapi tidak diucapkan?* |
+| **Temuan:**    | "Jam operasional perpustakaan tidak fleksibel" "Kalau hari kosong tidak ada matkul, ngga worth it kalau cuma ke perpus" | Saya butuh perpustakaan dengan jam yang lebih luas agar cocok dengan jadwal kuliah saya. Jika tidak ada kuliah, saya butuh motivasi/alasan yang lebih kuat untuk ke perpustakaan. |
+
+|                      | **DOES** ⚡             | **FEELS** ❤️          |
+| -------------------- | ----------------------------- | ----------------------------- |
+| *Apa yang user …* | *lakukan / tindakan nyata?* | *rasakan secara emosional?* |
+| **Temuan:**    | Jarang ke perpustakaan (2x per semester), hanya ke perpus saat ada kebutuhan mendesak terkait kuliah, hindari perpus karena jam operasional tidak sesuai | Frustasi dengan jam operasional, merasa perpustakaan tidak memahami kebutuhan mahasiswa, kurang termotivasi untuk berkunjung |
 
 > **Link Figma:** _______________________________________________
 
@@ -128,7 +148,11 @@ Susun minimal 5 pertanyaan non-leading sebelum turun ke lapangan:
 
 Tulis dalam format: **[User] butuh [solusi] karena [alasan/hambatan]**
 
-> *Pain Point:*
+**▸ Responden 1 (Hilma Ayu Sholiha):**
+> Mahasiswa TRPL **butuh sistem perpustakaan dengan fitur kategori & pencarian eksploratif** karena sistem yang ada tidak membantu menemukan buku baru dan suasana perpustakaan yang suram membuat kurang tertarik berkunjung.
+
+**▸ Responden 2 (Hadi Arindra):**
+> Mahasiswa Teknik Sipil **butuh jam operasional perpustakaan yang lebih fleksibel dan diperpanjang** karena jam tutup yang terlalu awal (16:00) dan tutup saat istirahat (12:00-13:00) tidak sesuai dengan jadwal kuliah, membuat sulit menemukan waktu berkunjung.
 
 ---
 
