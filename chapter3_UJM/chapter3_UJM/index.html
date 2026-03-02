@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UI/UX Meeting 3 - User Persona & UJM</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --bg-deep: #080E1A;
+            --bg-card: rgba(15, 28, 54, 0.85);
+            --bg-card2: rgba(255, 255, 255, 0.04);
+            --accent: #4F8EF7;
+            --accent2: #F59E0B;
+            --success: #10B981;
+            --text: #E2E8F0;
+            --text-muted: #94A3B8;
+            --border: rgba(79, 142, 247, 0.25);
+            --border2: rgba(255, 255, 255, 0.08);
+            --glass: rgba(255, 255, 255, 0.05);
+            --glow: 0 0 40px rgba(79, 142, 247, 0.15);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--bg-deep);
+            background-image:
+                radial-gradient(ellipse 80% 60% at 20% 10%, rgba(79, 142, 247, 0.08) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 50% at 80% 90%, rgba(245, 158, 11, 0.06) 0%, transparent 55%);
+            font-family: 'Inter', sans-serif;
+            overflow: hidden;
+            color: var(--text);
+        }
+
+        /* ─── LAYOUT ──────────────────────────────── */
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide {
+            width: 1280px;
+            height: 720px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            box-shadow: var(--glow), 0 24px 80px rgba(0, 0, 0, 0.6);
+            position: absolute;
+            display: none;
+            flex-direction: column;
+            padding: 52px 64px;
+            backdrop-filter: blur(20px);
+            overflow: hidden;
+        }
+
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent));
+            border-radius: 16px 16px 0 0;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        /* Slide enter animation */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(18px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide.active {
+            animation: slideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+
+        /* ─── TYPOGRAPHY ──────────────────────────── */
+        h1,
+        h2,
+        h3 {
+            font-family: 'Syne', sans-serif;
+            line-height: 1;
+            letter-spacing: -0.5px;
+        }
+
+        h1 {
+            font-size: 82px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+            line-height: 0.95;
+        }
+
+        h2 {
+            font-size: 36px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text);
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 14px;
+            margin-bottom: 28px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        h2::before {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 36px;
+            background: linear-gradient(180deg, var(--accent), var(--accent2));
+            border-radius: 3px;
+            flex-shrink: 0;
+        }
+
+        h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        p,
+        li {
+            font-size: 19px;
+            font-weight: 400;
+            line-height: 1.55;
+            color: var(--text);
+        }
+
+        /* ─── TAG / BADGE ─────────────────────────── */
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(79, 142, 247, 0.15);
+            color: var(--accent);
+            border: 1px solid rgba(79, 142, 247, 0.4);
+            padding: 7px 18px;
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 18px;
+        }
+
+        .tag.amber {
+            background: rgba(245, 158, 11, 0.12);
+            color: var(--accent2);
+            border-color: rgba(245, 158, 11, 0.35);
+        }
+
+        .tag.green {
+            background: rgba(16, 185, 129, 0.12);
+            color: var(--success);
+            border-color: rgba(16, 185, 129, 0.35);
+        }
+
+        /* ─── CARDS ───────────────────────────────── */
+        .box {
+            background: var(--bg-card2);
+            border: 1px solid var(--border2);
+            border-radius: 12px;
+            padding: 22px 24px;
+            margin-bottom: 16px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .box.interactive:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(79, 142, 247, 0.1);
+            border-color: rgba(79, 142, 247, 0.4);
+        }
+
+        .box.accent {
+            border-color: rgba(79, 142, 247, 0.3);
+            background: rgba(79, 142, 247, 0.08);
+        }
+
+        .box.amber {
+            border-color: rgba(245, 158, 11, 0.3);
+            background: rgba(245, 158, 11, 0.08);
+        }
+
+        .box.highlight {
+            border-color: rgba(79, 142, 247, 0.5);
+            background: rgba(79, 142, 247, 0.1);
+            box-shadow: inset 0 0 20px rgba(79, 142, 247, 0.05);
+        }
+
+        /* ─── SPLIT LAYOUT ────────────────────────── */
+        .split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            width: 100%;
+            align-items: start;
+            flex: 1;
+        }
+
+        .split.wide {
+            grid-template-columns: 1.1fr 0.9fr;
+        }
+
+        /* ─── IMAGE CONTAINER ─────────────────────── */
+        .image-container {
+            border-radius: 12px;
+            border: 1px solid var(--border2);
+            background: rgba(255, 255, 255, 0.03);
+            overflow: hidden;
+            position: relative;
+            height: 360px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.9;
+        }
+
+        .image-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(0deg, rgba(8, 14, 26, 0.95), transparent);
+            color: var(--text-muted);
+            padding: 24px 16px 12px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        /* ─── LISTS ───────────────────────────────── */
+        ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 8px;
+        }
+
+        li {
+            margin-bottom: 14px;
+            padding-left: 28px;
+            position: relative;
+        }
+
+        li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 10px;
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+        }
+
+        ol {
+            padding-left: 0;
+            list-style: none;
+            counter-reset: ol-counter;
+        }
+
+        ol li {
+            counter-increment: ol-counter;
+            padding-left: 36px;
+        }
+
+        ol li::before {
+            content: counter(ol-counter);
+            position: absolute;
+            left: 0;
+            top: 1px;
+            width: 22px;
+            height: 22px;
+            background: rgba(79, 142, 247, 0.2);
+            border: 1px solid rgba(79, 142, 247, 0.4);
+            border-radius: 6px;
+            color: var(--accent);
+            font-size: 13px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ─── CONTENT WRAPPER ─────────────────────── */
+        .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ─── MARQUEE ─────────────────────────────── */
+        .marquee {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.4);
+            border-top: 1px solid var(--border2);
+            padding: 10px 0;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            overflow: hidden;
+            white-space: nowrap;
+            border-radius: 0 0 16px 16px;
+        }
+
+        .marquee-content {
+            display: inline-block;
+            animation: scroll 35s linear infinite;
+        }
+
+        @keyframes scroll {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* ─── NAVIGATION ──────────────────────────── */
+        .controls {
+            position: fixed;
+            bottom: 32px;
+            right: 44px;
+            display: flex;
+            gap: 12px;
+            z-index: 100;
+        }
+
+        .nav-btn {
+            background: rgba(15, 28, 54, 0.9);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 12px 28px;
+            font-family: 'Syne', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-btn:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(79, 142, 247, 0.4);
+        }
+
+        .nav-btn:active {
+            transform: scale(0.97);
+        }
+
+        .slide-counter {
+            position: fixed;
+            bottom: 32px;
+            left: 44px;
+            background: rgba(15, 28, 54, 0.9);
+            color: var(--text-muted);
+            border: 1px solid var(--border2);
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            font-family: 'Syne', sans-serif;
+            letter-spacing: 1px;
+            backdrop-filter: blur(10px);
+            z-index: 100;
+        }
+
+        .slide-counter span {
+            color: var(--accent);
+            font-weight: 800;
+        }
+
+        /* ─── PROGRESS BAR ────────────────────────── */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+            transition: width 0.4s ease;
+            z-index: 200;
+            border-radius: 0 2px 2px 0;
+        }
+
+        /* ─── SLIDE-SPECIFIC ──────────────────────── */
+        .slide-title-bg {
+            position: absolute;
+            right: -60px;
+            top: -80px;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(79, 142, 247, 0.12) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .rule-highlight {
+            font-family: 'Syne', sans-serif;
+            font-size: 90px;
+            font-weight: 800;
+            text-transform: uppercase;
+            line-height: 0.95;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(79, 142, 247, 0.08);
+            border: 1px solid rgba(79, 142, 247, 0.2);
+            border-radius: 10px;
+            padding: 12px 20px;
+            margin-top: 12px;
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        .stat-badge i {
+            color: var(--accent);
+            font-size: 18px;
+        }
+
+        /* ─── UJM SPECIFIC CSS ────────────────────── */
+        .journey-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .journey-item {
+            background: var(--bg-card2);
+            border: 1px solid var(--border2);
+            border-radius: 10px;
+            padding: 20px;
+            position: relative;
+        }
+
+        .journey-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+        }
+
+        .journey-item.phase1::before {
+            background: var(--accent);
+        }
+
+        .journey-item.phase2::before {
+            background: var(--accent2);
+        }
+
+        .journey-item.phase3::before {
+            background: var(--success);
+        }
+
+        .emotion-face {
+            font-size: 32px;
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        .curve-line {
+            width: 100%;
+            height: 2px;
+            background: var(--border);
+            position: relative;
+            margin: 30px 0;
+        }
+
+        .curve-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--accent2);
+            position: absolute;
+            top: -7px;
+            transform: translateX(-50%);
+            box-shadow: 0 0 10px var(--accent2);
+        }
+
+        /* ─── STEP REVEAL ANIMATION ───────────────── */
+        .slide.active .step {
+            opacity: 0.15;
+            filter: blur(2px);
+            transform: translateY(10px);
+            transition: opacity 0.4s ease, filter 0.4s ease, transform 0.4s ease;
+        }
+
+        .slide.active .step.active-step {
+            opacity: 1;
+            filter: blur(0);
+            transform: translateY(0);
+        }
+
+        /* ─── FULLSCREEN TOGGLE ───────────────────── */
+        .fs-toggle {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: var(--text-muted);
+            width: 44px;
+            height: 44px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            z-index: 100;
+            padding: 0;
+        }
+
+        .fs-toggle:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="progress-bar" id="progressBar"></div>
+    <div class="slide-counter" id="slideCounter"><span id="currentNum">1</span> / <span id="totalNum">0</span></div>
+
+    <div class="presentation-container">
+
+        <!-- ─── Slide 1: Title ─────────────────────────────── -->
+        <div class="slide active">
+            <div class="slide-title-bg"></div>
+            <div class="content" style="justify-content: center;">
+                <div class="tag">Meeting 03 &nbsp;·&nbsp; Design Phase</div>
+                <h1 style="color: var(--text);">Who Are We<br>Designing For?</h1>
+                <h2 style="border: none; margin-top: 10px; font-size: 32px; color: var(--accent); display: block;">
+                    User Persona & Journey Mapping
+                </h2>
+                <div class="box accent interactive" style="width: fit-content; margin-top: 28px; padding: 14px 24px;">
+                    <p style="font-size: 20px; font-weight: 500; color: var(--text-muted);">Dari Asumsi Menjadi Empati
+                        Terukur</p>
+                </div>
+            </div>
+            <div class="marquee">
+                <div class="marquee-content">
+                    CONCEIVE &nbsp;·&nbsp; DESIGN &nbsp;·&nbsp; IMPLEMENT &nbsp;·&nbsp; OPERATE &nbsp;·&nbsp; USER
+                    PERSONA &nbsp;·&nbsp; JOURNEY MAPPING &nbsp;·&nbsp; PAIN POINTS &nbsp;·&nbsp; OPPORTUNITIES
+                    &nbsp;·&nbsp; CONCEIVE &nbsp;·&nbsp; DESIGN &nbsp;·&nbsp; IMPLEMENT &nbsp;·&nbsp; OPERATE
+                    &nbsp;·&nbsp;
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── Slide 2: Connecting the Dots ─────────── -->
+        <div class="slide">
+            <div class="content">
+                <h2>Connecting the Dots</h2>
+                <div class="split">
+                    <div>
+                        <p style="font-size: 20px; line-height: 1.6; color: var(--text-muted);">Minggu lalu kita
+                            mengumpulkan data melalui <strong style="color:var(--text);">Observasi dan Wawancara
+                                (Empathy)</strong>.</p>
+                        <div class="box interactive step" style="margin-top: 24px;">
+                            <h3 style="color: var(--accent); margin-bottom: 8px;"><i class="fa-solid fa-database"></i>
+                                Data Mentah ke Insight</h3>
+                            <p style="font-size: 16px; color: var(--text-muted);">Data wawancara yang tersebar tidak
+                                bisa langsung di-coding atau di-desain. Kita harus menyaringnya menjadi <strong
+                                    style="color:var(--text);">Wajah (Persona)</strong> dan <strong
+                                    style="color:var(--text);">Jalur (Journey)</strong>.</p>
+                        </div>
+                        <ul style="margin-top: 16px;">
+                            <li class="step"><strong>Step 1:</strong> Afinity Diagram (Mengelompokkan data)</li>
+                            <li class="step"><strong>Step 2:</strong> Membentuk User Persona</li>
+                            <li class="step"><strong>Step 3:</strong> Memetakan User Journey</li>
+                        </ul>
+                    </div>
+                    <div class="image-container">
+                        <img src="https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=600&q=80"
+                            alt="Team analyzing data">
+                        <div class="image-caption">Menganalisis hasil observasi lapangan</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── Slide 3: Definisi Persona ─────────────── -->
+        <div class="slide">
+            <div class="content">
+                <div class="tag">Konsep Inti</div>
+                <h2>Apa itu User Persona?</h2>
+                <p style="font-size: 22px; color: var(--text-muted); margin-bottom: 24px;">Representasi fiktif, namun
+                    <strong style="color:var(--accent);">berbasis data nyata</strong>, dari segmen pengguna target
+                    (target user) Anda.</p>
+
+                <div class="split" style="gap: 28px;">
+                    <div class="box interactive step" style="padding: 24px;">
+                        <div class="tag amber" style="margin-bottom: 14px;"><i class="fa-solid fa-xmark"></i> Mitos
+                            Persona</div>
+                        <ul>
+                            <li>Dibuat berdasarkan tebakan atau asumsi tim developer.</li>
+                            <li>Hanya representasi 1 orang di dunia nyata.</li>
+                            <li>Fokus hanya pada umur dan pekerjaan (demografi tok).</li>
+                        </ul>
+                    </div>
+                    <div class="box accent interactive step" style="padding: 24px;">
+                        <div class="tag green" style="margin-bottom: 14px;"><i class="fa-solid fa-check"></i> Fakta
+                            Persona</div>
+                        <ul>
+                            <li>Dibuat dari <strong style="color:var(--success);">pola perilaku</strong> sekumpulan
+                                orang (hasil wawancara).</li>
+                            <li>Sintesis dari banyak user nyata.</li>
+                            <li>Fokus pada <strong>Tujuan (Goals)</strong> dan <strong>Rasa Sakit (Pain
+                                    Points)</strong>.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── Slide 4: CDIO - Conceive Phase ───────────────────────── -->
+        <div class="slide">
+            <div class="content" style="justify-content: center; align-items: center; text-align: center;">
+                <div class="tag amber"><i class="fa-solid fa-lightbulb"></i> CDIO Framework</div>
+                <div class="rule-highlight step" style="margin-top: 16px; font-size: 80px;">Conceive:<br>Definisikan
+                    Masalah.</div>
+                <div class="box interactive step" style="margin-top: 32px; max-width: 800px; padding: 24px 32px;">
+                    <p style="font-size: 20px; font-weight: 400; color: var(--text-muted);">Dalam tahapan <strong
+                            style="color:var(--text);">Conceive</strong> (Merumuskan), Persona bertindak sebagai
+                        jangkar. Jika tim berdebat soal fitur, tanyakan: <em style="color:var(--accent2);">"Apakah
+                            'Budi' (Persona kita) akan menggunakan fitur ini?"</em>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── Slide 5: Anatomy of Persona ───────────────── -->
+        <div class="slide">
+            <div class="content">
+                <h2><i class="fa-solid fa-address-card" style="color:var(--accent); font-size:26px;"></i> Anatomi User
+                    Persona yang Solid</h2>
+                <div class="split wide">
+                    <div>
+                        <div class="box interactive" style="padding: 26px;">
+                            <ul>
+                                <li class="step"><strong>Name & Bio:</strong> Nama fiktif, kutipan (quote) khas,
+                                    profesi, umur.</li>
+                                <li class="step"><strong>Goals / Needs:</strong> Apa tujuan akhir yang ingin mereka
+                                    capai? (Misal: "Lulus KRS tanpa error").</li>
+                                <li class="step"><strong>Frustrations / Pain Points:</strong> Apa yang membuat mereka
+                                    kesal saat ini?</li>
+                                <li class="step"><strong>Behaviors:</strong> Kebiasaan sehari-hari menggunakan teknologi
+                                    (Mobile/Desktop? Sosmed?).</li>
+                            </ul>
+                        </div>
+                        <div class="stat-badge step" style="margin-top:10px;">
+                            <i class="fa-solid fa-triangle-exclamation" style="color: var(--accent2);"></i>
+                            Persona tanpa "Pain Point" tidak bisa memberikan solusi desain!
+                        </div>
+                    </div>
+                    <div class="image-container" style="height: 100%;">
+                        <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?w=600&q=80"
+                            alt="Persona Card Design">
+                        <div class="image-caption">Drafting a Persona Card</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── Slide 6: Contoh Persona Riil ─────── -->
+        <div class="slide">
+            <div class="content">
+                <div class="tag">Contoh</div>
+                <h2>Contoh: Sistem Akademik Kampus (SIAKAD)</h2>
+
+                <div class="box accent" style="display: flex; gap: 24px; align-items: flex-start; margin-top: 10px;">
+                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&h=200&fit=crop"
+                        style="border-radius: 50%; width: 150px; height: 150px; border: 4px solid var(--border);">
+                    <div>
+                        <h3 style="font-size: 28px; margin-bottom: 5px; color: var(--text);">Tegar "Si Sibuk"</h3>
+                        <p style="font-size: 15px; color: var(--accent); margin-bottom: 12px; font-style: italic;">"Saya
+                            kerja part-time, KRS-an harus cepat dari HP pas lagi istirahat kerja."</p>
+
+                        <div style="display: flex; gap: 40px; margin-top: 16px;">
+                            <div class="step">
+                                <strong style="color: var(--success); font-size: 14px; text-transform: uppercase;">✅
+                                    Goals</strong>
+                                <ul style="margin-top: 5px; font-size: 15px;">
+                                    <li>Bisa ambil kelas dengan jadwal pas.</li>
+                                    <li>Proses bayar SPP otomatis / virtual account.</li>
+                                </ul>
+                            </div>
+                            <div class="step">
+                                <strong style="color: var(--accent2); font-size: 14px; text-transform: uppercase;">⚠️
+                                    Frustrations</strong>
+                                <ul style="margin-top: 5px; font-size: 15px;">
+                                    <li>Server selalu down di 10 menit pertama KRS.</li>
+                                    <li>UI di HP terpotong sehingga salah klik kelas.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── Slide 7: Apa itu UJM ───────────────────────── -->
+        <div class="slide">
+            <div class="content">
+                <h2>User Journey Mapping (UJM)</h2>
+                <div class="split">
+                    <div>
+                        <p style="font-size: 18px; line-height: 1.6; color: var(--text-muted);">Persona memberi tahu
+                            kita <strong>SIAPA</strong> pengguna kita. Journey Mapping memberi tahu kita
+                            <strong>BAGAIMANA</strong> pengalaman mereka langkah demi langkah.</p>
+                        <div class="box interactive step" style="margin-top: 20px;">
+                            <h3 style="color: var(--accent); font-size: 15px; text-transform: uppercase;">Definisi</h3>
+                            <p style="font-size: 16px; color: var(--text);">Visualisasi dari proses yang dilalui
+                                pengguna untuk mencapai suatu tujuan khusus pada produk/layanan Anda.</p>
+                        </div>
+                        <ul style="margin-top: 16px;">
+                            <li class="step">Menemukan "Gaps" (Celah) di mana user kebingungan.</li>
+                            <li class="step">Memecah proses kompleks menjadi fase-fase kecil.</li>
+                            <li class="step">Memberi fokus pada <strong style="color:var(--accent2);">emosi
+                                    pengguna</strong> di setiap titik interaksi (Touchpoint).</li>
+                        </ul>
+                    </div>
+                    <div class="image-container" style="background: rgba(255,255,255,0.05);">
+                        <img src="https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?w=600&q=80"
+                            alt="Journey Mapping Post-its">
+                        <div class="image-caption">Visualizing the Journey across touchpoints</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── Slide 8: CDIO - Design Phase ────────────────────── -->
+        <div class="slide">
+            <div class="content" style="justify-content: center; align-items: center; text-align: center;">
+                <div class="tag"><i class="fa-solid fa-compass-drafting"></i> CDIO Framework</div>
+                <div class="rule-highlight step" style="margin-top: 16px; font-size: 80px;">Design:<br>Peta Pengalaman.
+                </div>
+                <div class="box interactive step" style="margin-top: 32px; max-width: 800px; padding: 24px 32px;">
+                    <p style="font-size: 20px; font-weight: 400; color: var(--text-muted);">Dalam tahapan <strong
+                            style="color:var(--text);">Design</strong>, UJM menjadi cetak biru (blueprint). Anda tidak
+                        bisa merancang layar aplikasi (UI) yang baik jika Anda tidak tahu urutan kronologis kejadian
+                        (Journey).</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── Slide 9: Anatomi UJM ────────────────────────── -->
+        <div class="slide">
+            <div class="content">
+                <h2>Anatomi Journey Map</h2>
+                <p style="color: var(--text-muted); font-size: 16px; margin-bottom: 20px;">Elemen wajib dalam pemetaan
+                    perjalanan pengguna:</p>
+
+                <div class="box" style="padding: 16px;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div class="step">
+                            <h3 style="color: var(--accent); font-size: 16px;">1. Actor & Scenario</h3>
+                            <p style="font-size: 14px;">Siapa? (Persona) dan Apa tujuannya? (Misal: Tegar ingin KRS-an).
+                            </p>
+                        </div>
+                        <div class="step">
+                            <h3 style="color: var(--accent); font-size: 16px;">2. Phases (Fase Berjalan)</h3>
+                            <p style="font-size: 14px;">Contoh: Persiapan -> Eksekusi KRS -> Konfirmasi Dosen.</p>
+                        </div>
+                        <div class="step">
+                            <h3 style="color: var(--accent2); font-size: 16px;">3. Actions & Touchpoints</h3>
+                            <p style="font-size: 14px;">Apa yang user KLIK? Gadget apa yang dipakai? Interaksi sistem vs
+                                manusia.</p>
+                        </div>
+                        <div class="step">
+                            <h3 style="color: var(--success); font-size: 16px;">4. Emotion & Thoughts</h3>
+                            <p style="font-size: 14px;">Kurva emosi (Senang, Bingung, Frustrasi) + Apa yang dipikirkan.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── Slide 10: Mapping Process (KRS Case) ───────────── -->
+        <div class="slide">
+            <div class="content">
+                <div class="tag">Studi Kasus: Sistem KRS</div>
+                <h2 style="margin-bottom: 10px;">Mapping The Emotion Curve</h2>
+                <p style="font-size: 16px; color: var(--text-muted); margin-bottom: 20px;">Dimana letak grafiknya turun
+                    drastis? Itulah prioritas redesign kita!</p>
+
+                <div class="journey-grid">
+                    <div class="journey-item phase1 step">
+                        <div class="tag" style="padding: 4px 10px; font-size: 11px;">Phase 1: Persiapan</div>
+                        <p style="font-size: 14px; margin-bottom: 8px;"><strong>Action:</strong> Login siakad, cek
+                            jadwal matkul.</p>
+                        <p style="font-size: 14px; color: var(--text-muted);"><strong>Thought:</strong> "Semoga kelas UX
+                            pagi belum penuh."</p>
+                        <div class="emotion-face">😐</div>
+                    </div>
+
+                    <div class="journey-item phase2 step">
+                        <div class="tag amber" style="padding: 4px 10px; font-size: 11px;">Phase 2: Eksekusi (The Pain)
+                        </div>
+                        <p style="font-size: 14px; margin-bottom: 8px;"><strong>Action:</strong> Klik "Ambil", loading
+                            muter-muter, tiba-tiba logout otomatis.</p>
+                        <p style="font-size: 14px; color: var(--text-muted);"><strong>Thought:</strong> "Waduh, koneksi
+                            atau servernya nih?!"</p>
+                        <div class="emotion-face">🤬</div>
+                    </div>
+
+                    <div class="journey-item phase3 step">
+                        <div class="tag green" style="padding: 4px 10px; font-size: 11px;">Phase 3: Konfirmasi</div>
+                        <p style="font-size: 14px; margin-bottom: 8px;"><strong>Action:</strong> Refresh 5x, akhirnya
+                            kelas masuk, chat Dosen PA via WA.</p>
+                        <p style="font-size: 14px; color: var(--text-muted);"><strong>Thought:</strong> "Huft, akhirnya
+                            selamat meskipun deg-degan."</p>
+                        <div class="emotion-face">😮‍💨</div>
+                    </div>
+                </div>
+
+                <div class="box accent step" style="margin-top: 24px; text-align: center;">
+                    <p style="font-size: 16px;">🔥 <strong>Peluang Inovasi (Opportunity):</strong> Fokus pada perbaikan
+                        UI/UX di <strong style="color:var(--accent2)">Phase 2</strong>. Beri indikator "Server Sibuk -
+                        Mohon Tunggu" daripada me-logout user secara sepihak.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── Slide 11: Lab Session 03 ─────────────────────── -->
+        <div class="slide">
+            <div class="content">
+                <div class="tag green"><i class="fa-solid fa-flask"></i> Lab Session 03</div>
+                <h2>Persona & Mapping Workshop</h2>
+                <div class="split">
+                    <div class="image-container" style="height: 380px;">
+                        <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&q=80"
+                            alt="Students collaborating">
+                        <div class="image-caption">Bekerja di Figma Workspace</div>
+                    </div>
+                    <div>
+                        <div class="box interactive" style="padding: 24px; height: fit-content;">
+                            <h3
+                                style="color: var(--accent); font-size: 13px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 16px;">
+                                <i class="fa-solid fa-desktop"></i> Tugas Figma Kelompok
+                            </h3>
+                            <ol>
+                                <li class="step">Ubah Empathy Map (dari Lab 02) menjadi <strong>1 User Persona
+                                        Final</strong>. Lengkapi Foto, Bio, dan Goals.</li>
+                                <li class="step">Pilih 1 Skenario spesifik (Misal: User ingin order makanan di kantin).
+                                </li>
+                                <li class="step">Buat <strong>User Journey Map</strong> sederhana dengan minimal 3
+                                    tahapan (Awal, Proses, Selesai).</li>
+                                <li class="step">Tandai titik paling kritis dengan ikon api 🔥 (Pain Point terburuk).
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── Slide 12: Closing ─────────────────────────── -->
+        <div class="slide">
+            <div class="slide-title-bg" style="right: auto; left: -80px; top: auto; bottom: -100px;"></div>
+            <div class="content" style="justify-content: center; align-items: center; text-align: center;">
+                <div class="tag" style="margin-bottom: 20px;"><i class="fa-solid fa-rocket"></i> Penutup</div>
+                <div class="rule-highlight" style="font-size: 72px;">Empathy is <br>Not Assumption.</div>
+                <div class="box interactive" style="width: fit-content; margin: 28px auto 0; padding: 16px 36px;">
+                    <p style="font-size: 20px; color: var(--text-muted);">Next Week: <strong
+                            style="color:var(--text);">Ideate Phase (Wireframing & Solusi)</strong></p>
+                </div>
+            </div>
+            <div class="marquee" style="color: var(--accent);">
+                <div class="marquee-content">
+                    KNOW YOUR USER &nbsp;·&nbsp; MAP THEIR JOURNEY &nbsp;·&nbsp; SOLVE REAL PROBLEMS &nbsp;·&nbsp; CDIO
+                    FRAMEWORK &nbsp;·&nbsp; KNOW YOUR USER &nbsp;·&nbsp; MAP THEIR JOURNEY &nbsp;·&nbsp; SOLVE REAL
+                    PROBLEMS &nbsp;·&nbsp;
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- CONTROLS -->
+    <div class="controls">
+        <button class="nav-btn" id="prevBtn">← Prev</button>
+        <button class="nav-btn" id="nextBtn"
+            style="background: var(--accent); border-color: var(--accent); color: #fff;">Next →</button>
+        <button class="nav-btn fs-toggle" id="fsBtn" title="Toggle Fullscreen">
+            <i class="fa-solid fa-expand"></i>
+        </button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalNum = slides.length;
+
+        document.getElementById('totalNum').textContent = totalNum;
+
+        function updateSlide() {
+            slides.forEach((slide, index) => {
+                slide.classList.remove('active');
+                if (index === currentSlide) {
+                    slide.classList.add('active');
+                    // Sembunyikan semua step di slide ini agar bisa di-reveal satu per satu
+                    const steps = slide.querySelectorAll('.step');
+                    steps.forEach(s => s.classList.remove('active-step'));
+                }
+            });
+            document.getElementById('currentNum').textContent = currentSlide + 1;
+            const pct = ((currentSlide + 1) / totalNum) * 100;
+            document.getElementById('progressBar').style.width = pct + '%';
+        }
+
+        function advanceNext() {
+            const currentSlideEl = slides[currentSlide];
+            const unrevealedSteps = currentSlideEl.querySelectorAll('.step:not(.active-step)');
+            if (unrevealedSteps.length > 0) {
+                // Tampilkan step berikutnya
+                unrevealedSteps[0].classList.add('active-step');
+            } else {
+                // Semua step sudah tampil, pindah ke slide berikutnya
+                if (currentSlide < totalNum - 1) {
+                    currentSlide++;
+                    updateSlide();
+                }
+            }
+        }
+
+        document.getElementById('nextBtn').addEventListener('click', advanceNext);
+
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            if (currentSlide > 0) { currentSlide--; updateSlide(); }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                advanceNext();
+                e.preventDefault();
+            }
+            if (e.key === 'ArrowLeft') {
+                if (currentSlide > 0) { currentSlide--; updateSlide(); }
+            }
+        });
+
+        // Fullscreen toggle
+        const fsBtn = document.getElementById('fsBtn');
+        fsBtn.addEventListener('click', () => {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            } else {
+                document.exitFullscreen();
+            }
+        });
+
+        document.addEventListener('fullscreenchange', () => {
+            const icon = fsBtn.querySelector('i');
+            icon.className = document.fullscreenElement ? 'fa-solid fa-compress' : 'fa-solid fa-expand';
+        });
+
+        updateSlide();
+    </script>
+</body>
+
+</html>

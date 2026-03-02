@@ -26,7 +26,7 @@
 - [ ] **Parkir Kampus** — *kesulitan mencari parkir, antrian, tarif, keamanan kendaraan*
 - [ ] **Sistem KRS** — *proses pengisian, server lambat, data salah, jadwal bentrok*
 - [ ] **Kantin Kampus** — *antrian panjang, variasi menu, kebersihan, jam operasional*
-- [X] **Lainnya:**  Identifikasi Faktor yang Mempengaruhi Tingkat Kunjungan Mahasiswa ke Perpustakaan Kampus
+- [X] **Lainnya:**  Identifikasi Faktor yang Mempengaruhi Tingkat Rendahnya Kunjungan Mahasiswa ke Perpustakaan Kampus
 
 **Jelaskan masalah yang dipilih dengan kalimat sendiri:**
 *(Apa situasinya? Siapa yang terdampak? Kapan/di mana terjadi?)*
@@ -168,7 +168,7 @@ Tulis dalam format: **[User] butuh [solusi] karena [alasan/hambatan]**
 
 **Rencana untuk Minggu Depan (Define Phase):**
 
-> Jawaban: 
+> Jawaban: Membuat User Persona yang mengintegrasikan temuan dari kedua narasumber, kemudian melanjutkan dengan User Journey Mapping untuk skenario khusus mencari dan meminjam buku di perpustakaan. Akan mengidentifikasi touchpoint kritis dan merancang solusi inovasi untuk meningkatkan pengalaman mahasiswa di perpustakaan.
 
 ---
 

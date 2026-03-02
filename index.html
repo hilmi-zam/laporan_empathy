@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UI/UX Meeting 2 - Design Thinking & Empathy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --bg-deep: #080E1A;
+            --bg-card: rgba(15, 28, 54, 0.85);
+            --bg-card2: rgba(255, 255, 255, 0.04);
+            --accent: #4F8EF7;
+            --accent2: #F59E0B;
+            --success: #10B981;
+            --text: #E2E8F0;
+            --text-muted: #94A3B8;
+            --border: rgba(79, 142, 247, 0.25);
+            --border2: rgba(255, 255, 255, 0.08);
+            --glass: rgba(255, 255, 255, 0.05);
+            --glow: 0 0 40px rgba(79, 142, 247, 0.15);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--bg-deep);
+            background-image:
+                radial-gradient(ellipse 80% 60% at 20% 10%, rgba(79, 142, 247, 0.08) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 50% at 80% 90%, rgba(245, 158, 11, 0.06) 0%, transparent 55%);
+            font-family: 'Inter', sans-serif;
+            overflow: hidden;
+            color: var(--text);
+        }
+
+        /* ─── LAYOUT ──────────────────────────────── */
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide {
+            width: 1280px;
+            height: 720px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            box-shadow: var(--glow), 0 24px 80px rgba(0, 0, 0, 0.6);
+            position: absolute;
+            display: none;
+            flex-direction: column;
+            padding: 52px 64px;
+            backdrop-filter: blur(20px);
+            overflow: hidden;
+        }
+
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent));
+            border-radius: 16px 16px 0 0;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        /* Slide enter animation */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(18px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide.active {
+            animation: slideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+
+        /* ─── TYPOGRAPHY ──────────────────────────── */
+        h1,
+        h2,
+        h3 {
+            font-family: 'Syne', sans-serif;
+            line-height: 1;
+            letter-spacing: -0.5px;
+        }
+
+        h1 {
+            font-size: 82px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+            line-height: 0.95;
+        }
+
+        h2 {
+            font-size: 36px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text);
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 14px;
+            margin-bottom: 28px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        h2::before {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 36px;
+            background: linear-gradient(180deg, var(--accent), var(--accent2));
+            border-radius: 3px;
+            flex-shrink: 0;
+        }
+
+        h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        p,
+        li {
+            font-size: 19px;
+            font-weight: 400;
+            line-height: 1.55;
+            color: var(--text);
+        }
+
+        /* ─── TAG / BADGE ─────────────────────────── */
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(79, 142, 247, 0.15);
+            color: var(--accent);
+            border: 1px solid rgba(79, 142, 247, 0.4);
+            padding: 7px 18px;
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 18px;
+        }
+
+        .tag.amber {
+            background: rgba(245, 158, 11, 0.12);
+            color: var(--accent2);
+            border-color: rgba(245, 158, 11, 0.35);
+        }
+
+        .tag.green {
+            background: rgba(16, 185, 129, 0.12);
+            color: var(--success);
+            border-color: rgba(16, 185, 129, 0.35);
+        }
+
+        /* ─── CARDS ───────────────────────────────── */
+        .box {
+            background: var(--bg-card2);
+            border: 1px solid var(--border2);
+            border-radius: 12px;
+            padding: 22px 24px;
+            margin-bottom: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .box.accent {
+            border-color: rgba(79, 142, 247, 0.3);
+            background: rgba(79, 142, 247, 0.08);
+        }
+
+        .box.amber {
+            border-color: rgba(245, 158, 11, 0.3);
+            background: rgba(245, 158, 11, 0.08);
+        }
+
+        .box.highlight {
+            border-color: rgba(79, 142, 247, 0.5);
+            background: rgba(79, 142, 247, 0.1);
+            box-shadow: inset 0 0 20px rgba(79, 142, 247, 0.05);
+        }
+
+        /* ─── SPLIT LAYOUT ────────────────────────── */
+        .split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            width: 100%;
+            align-items: start;
+            flex: 1;
+        }
+
+        .split.wide {
+            grid-template-columns: 1.1fr 0.9fr;
+        }
+
+        /* ─── IMAGE CONTAINER ─────────────────────── */
+        .image-container {
+            border-radius: 12px;
+            border: 1px solid var(--border2);
+            background: rgba(255, 255, 255, 0.03);
+            overflow: hidden;
+            position: relative;
+            height: 360px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.9;
+        }
+
+        .image-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(0deg, rgba(8, 14, 26, 0.95), transparent);
+            color: var(--text-muted);
+            padding: 24px 16px 12px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        /* ─── LISTS ───────────────────────────────── */
+        ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 8px;
+        }
+
+        li {
+            margin-bottom: 14px;
+            padding-left: 28px;
+            position: relative;
+        }
+
+        li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 10px;
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+        }
+
+        ol {
+            padding-left: 0;
+            list-style: none;
+            counter-reset: ol-counter;
+        }
+
+        ol li {
+            counter-increment: ol-counter;
+            padding-left: 36px;
+        }
+
+        ol li::before {
+            content: counter(ol-counter);
+            position: absolute;
+            left: 0;
+            top: 1px;
+            width: 22px;
+            height: 22px;
+            background: rgba(79, 142, 247, 0.2);
+            border: 1px solid rgba(79, 142, 247, 0.4);
+            border-radius: 6px;
+            color: var(--accent);
+            font-size: 13px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ─── CONTENT WRAPPER ─────────────────────── */
+        .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ─── MARQUEE ─────────────────────────────── */
+        .marquee {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.4);
+            border-top: 1px solid var(--border2);
+            padding: 10px 0;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            overflow: hidden;
+            white-space: nowrap;
+            border-radius: 0 0 16px 16px;
+        }
+
+        .marquee-content {
+            display: inline-block;
+            animation: scroll 35s linear infinite;
+        }
+
+        @keyframes scroll {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* ─── NAVIGATION ──────────────────────────── */
+        .controls {
+            position: fixed;
+            bottom: 32px;
+            right: 44px;
+            display: flex;
+            gap: 12px;
+            z-index: 100;
+        }
+
+        .nav-btn {
+            background: rgba(15, 28, 54, 0.9);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 12px 28px;
+            font-family: 'Syne', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-btn:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(79, 142, 247, 0.4);
+        }
+
+        .nav-btn:active {
+            transform: scale(0.97);
+        }
+
+        .slide-counter {
+            position: fixed;
+            bottom: 32px;
+            left: 44px;
+            background: rgba(15, 28, 54, 0.9);
+            color: var(--text-muted);
+            border: 1px solid var(--border2);
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            font-family: 'Syne', sans-serif;
+            letter-spacing: 1px;
+            backdrop-filter: blur(10px);
+            z-index: 100;
+        }
+
+        .slide-counter span {
+            color: var(--accent);
+            font-weight: 800;
+        }
+
+        /* ─── PROGRESS BAR ────────────────────────── */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+            transition: width 0.4s ease;
+            z-index: 200;
+            border-radius: 0 2px 2px 0;
+        }
+
+        /* ─── SLIDE-SPECIFIC: TITLE ───────────────── */
+        .slide-title-bg {
+            position: absolute;
+            right: -60px;
+            top: -80px;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(79, 142, 247, 0.12) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        /* ─── SLIDE-SPECIFIC: RULE HIGHLIGHT ──────── */
+        .rule-highlight {
+            font-family: 'Syne', sans-serif;
+            font-size: 90px;
+            font-weight: 800;
+            text-transform: uppercase;
+            line-height: 0.95;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ─── EMPATHY MAP GRID ────────────────────── */
+        .em-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .em-card {
+            background: var(--bg-card2);
+            border: 1px solid var(--border2);
+            border-radius: 10px;
+            padding: 16px 18px;
+        }
+
+        .em-card h3 {
+            font-size: 12px;
+            letter-spacing: 2px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .em-card p {
+            font-size: 15px;
+            color: var(--text-muted);
+        }
+
+        .em-card.says {
+            border-top: 3px solid var(--accent);
+        }
+
+        .em-card.thinks {
+            border-top: 3px solid var(--accent2);
+        }
+
+        .em-card.does {
+            border-top: 3px solid var(--success);
+        }
+
+        .em-card.feels {
+            border-top: 3px solid #E879F9;
+        }
+
+        .em-card.says h3 {
+            color: var(--accent);
+        }
+
+        .em-card.thinks h3 {
+            color: var(--accent2);
+        }
+
+        .em-card.does h3 {
+            color: var(--success);
+        }
+
+        .em-card.feels h3 {
+            color: #E879F9;
+        }
+
+        /* ─── STAT BADGE ──────────────────────────── */
+        .stat-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(79, 142, 247, 0.08);
+            border: 1px solid rgba(79, 142, 247, 0.2);
+            border-radius: 10px;
+            padding: 12px 20px;
+            margin-top: 12px;
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        .stat-badge i {
+            color: var(--accent);
+            font-size: 18px;
+        }
+
+        /* ─── ICON ROW ────────────────────────────── */
+        .icon-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 50px;
+            padding: 24px 0;
+        }
+
+        .icon-card {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .icon-card i {
+            font-size: 48px;
+        }
+
+        .icon-card p {
+            font-size: 14px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .vs-divider {
+            font-family: 'Syne', sans-serif;
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--text-muted);
+        }
+
+        /* ─── 5 WHYS ──────────────────────────────── */
+        .why-chain {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .why-item {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+            padding: 10px 14px;
+            background: var(--bg-card2);
+            border-radius: 8px;
+            border-left: 3px solid var(--border);
+            font-size: 16px;
+            transition: border-color 0.2s, background 0.2s, transform 0.2s;
+        }
+
+        .why-item:hover {
+            transform: translateX(4px);
+            background: rgba(255, 255, 255, 0.08);
+            border-left-color: var(--accent);
+        }
+
+        .why-item.root {
+            border-left-color: var(--accent2);
+            background: rgba(245, 158, 11, 0.06);
+        }
+
+        .why-item.root:hover {
+            background: rgba(245, 158, 11, 0.12);
+            border-left-color: #FCD34D;
+        }
+
+        .why-item .why-num {
+            flex-shrink: 0;
+            font-family: 'Syne', sans-serif;
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--accent);
+            letter-spacing: 1px;
+            padding-top: 2px;
+        }
+
+        .why-item.root .why-num {
+            color: var(--accent2);
+        }
+
+        /* ─── DUE BADGE ───────────────────────────── */
+        .due-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(245, 158, 11, 0.12);
+            border: 1px solid rgba(245, 158, 11, 0.35);
+            border-radius: 8px;
+            padding: 12px 20px;
+            margin-top: 14px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--accent2);
+            letter-spacing: 0.5px;
+        }
+
+        /* ─── INTERACTIVE UI & HOVER STATES ───────── */
+        .box {
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .box.interactive:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(79, 142, 247, 0.1);
+            border-color: rgba(79, 142, 247, 0.4);
+        }
+
+        .em-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: default;
+        }
+
+        .em-card:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            z-index: 2;
+        }
+
+        /* ─── STEP REVEAL ANIMATION ───────────────── */
+        .slide.active .step {
+            opacity: 0.15;
+            filter: blur(2px);
+            transform: translateY(10px);
+            transition: opacity 0.4s ease, filter 0.4s ease, transform 0.4s ease;
+        }
+
+        .slide.active .step.active-step {
+            opacity: 1;
+            filter: blur(0);
+            transform: translateY(0);
+        }
+
+        /* ─── FULLSCREEN TOGGLE ───────────────────── */
+        .fs-toggle {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: var(--text-muted);
+            width: 44px;
+            height: 44px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            z-index: 100;
+            padding: 0;
+        }
+
+        .fs-toggle:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="progress-bar" id="progressBar"></div>
+    <div class="slide-counter" id="slideCounter"><span id="currentNum">1</span> / <span id="totalNum">15</span></div>
+
+    <div class="presentation-container">
+
+        <!-- ─── Slide 1: Title ─────────────────────────────── -->
+        <div class="slide active">
+            <div class="slide-title-bg"></div>
+            <div class="content" style="justify-content: center;">
+                <div class="tag">Meeting 02 &nbsp;·&nbsp; Conceive Phase</div>
+                <h1 style="color: var(--text);">Design<br>Thinking &<br><span
+                        style="background: linear-gradient(135deg,var(--accent),var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">Empathy.</span>
+                </h1>
+                <div class="box accent interactive" style="width: fit-content; margin-top: 28px; padding: 14px 24px;">
+                    <p style="font-size: 20px; font-weight: 500; color: var(--text-muted);">Memahami Masalah Sebelum
+                        Mencari Solusi</p>
+                </div>
+            </div>
+            <div class="marquee">
+                <div class="marquee-content">
+                    EMPATHY &nbsp;·&nbsp; DEFINE &nbsp;·&nbsp; IDEATE &nbsp;·&nbsp; PROTOTYPE &nbsp;·&nbsp; TEST
+                    &nbsp;·&nbsp; HUMAN CENTERED &nbsp;·&nbsp; PROBLEM SOLVING &nbsp;·&nbsp; USER PERSONA &nbsp;·&nbsp;
+                    EMPATHY MAP &nbsp;·&nbsp; EMPATHY &nbsp;·&nbsp; DEFINE &nbsp;·&nbsp; IDEATE &nbsp;·&nbsp; PROTOTYPE
+                    &nbsp;·&nbsp;
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── Slide 2: What is Design Thinking? ─────────── -->
+        <div class="slide">
+            <div class="content">
+                <h2>What is Design Thinking?</h2>
+                <div class="split">
+                    <div>
+                        <p class="step" style="font-size: 20px; line-height: 1.6; color: var(--text-muted);">Metodologi
+                            desain
+                            berbasis solusi untuk memecahkan masalah <strong style="color:var(--text);">kompleks dan
+                                ambigu</strong> secara sistematis.</p>
+                        <div class="box accent interactive step" style="margin-top: 24px;">
+                            <h3
+                                style="color: var(--accent); font-size: 14px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px;">
+                                Prinsip Utama</h3>
+                            <p style="font-size: 17px; color: var(--text-muted);">Kita tidak <em>menebak-nebak</em> apa
+                                yang user inginkan. Kita <strong style="color:var(--text);">mengobservasi</strong> dan
+                                <strong style="color:var(--text);">berempati</strong> secara mendalam.
+                            </p>
+                        </div>
+                        <div class="stat-badge step">
+                            <i class="fa-solid fa-arrow-trend-up"></i>
+                            5 Fase: Empathize → Define → Ideate → Prototype → Test
+                        </div>
+                    </div>
+                    <div class="image-container">
+                        <img src="https://images.unsplash.com/photo-1512758017271-d7b84c2113f1?w=600&q=80"
+                            alt="Design Thinking Process">
+                        <div class="image-caption">The 5 Stages of Design Thinking</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── Slide 3: Empathy vs Sympathy ─────────────── -->
+        <div class="slide">
+            <div class="content">
+                <h2>Empathy vs Sympathy</h2>
+                <div class="split" style="gap: 28px;">
+                    <div class="box interactive step" style="padding: 28px; height: 100%;">
+                        <div class="tag" style="margin-bottom: 14px;">Simpati</div>
+                        <p style="font-size: 20px; font-style: italic; margin-bottom: 12px; color: var(--text);">"Saya
+                            kasihan melihat kesulitanmu."</p>
+                        <p style="color: var(--text-muted); font-size: 16px;">Kita berada di luar masalah — hanya
+                            sekadar tahu tanpa ikut merasakan.</p>
+                    </div>
+                    <div class="box accent interactive step" style="padding: 28px; height: 100%;">
+                        <div class="tag" style="margin-bottom: 14px;"><i class="fa-solid fa-heart-pulse"></i> Empati
+                        </div>
+                        <p style="font-size: 20px; font-style: italic; margin-bottom: 12px; color: var(--text);">"Saya
+                            merasakan apa yang kamu rasakan."</p>
+                        <p style="color: var(--text-muted); font-size: 16px;">Kita masuk ke dalam dunia mereka untuk
+                            mengerti alasan di balik setiap tindakannya.</p>
+                    </div>
+                </div>
+                <div class="icon-row step" style="flex: 0; margin-top: 10px;">
+                    <div class="icon-card">
+                        <i class="fa-solid fa-eye" style="color: var(--text-muted);"></i>
+                        <p>Melihat dari jauh</p>
+                    </div>
+                    <div class="vs-divider">VS</div>
+                    <div class="icon-card">
+                        <i class="fa-solid fa-person-walking-arrow-right" style="color: var(--accent);"></i>
+                        <p>Berjalan dengan sepatu mereka</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── Slide 4: UX Rule #1 ───────────────────────── -->
+        <div class="slide">
+            <div class="content" style="justify-content: center; align-items: center; text-align: center;">
+                <div class="tag amber"><i class="fa-solid fa-star"></i> UX Rule #1</div>
+                <div class="rule-highlight step" style="margin-top: 16px; font-size: 96px;">You Are Not<br>The User.
+                </div>
+                <div class="box interactive step" style="margin-top: 32px; max-width: 800px; padding: 24px 32px;">
+                    <p style="font-size: 20px; font-weight: 400; color: var(--text-muted);">Hanya karena kita
+                        <em>menyukai</em> satu fitur, bukan berarti user <em>membutuhkan</em> fitur itu. Jangan gunakan
+                        asumsi pribadi dalam mendesain.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── Slide 5: Phase 1 – Empathy ───────────────── -->
+        <div class="slide">
+            <div class="content">
+                <h2><i class="fa-solid fa-magnifying-glass"
+                        style="color:var(--accent); font-size:22px; font-family:inherit;"></i> Phase 1: Empathy</h2>
+                <div class="split wide">
+                    <div class="box interactive" style="padding: 26px;">
+                        <h3
+                            style="color: var(--accent); margin-bottom: 18px; text-transform: uppercase; font-size: 14px; letter-spacing: 1px;">
+                            Cara Berempati di Lapangan</h3>
+                        <ul>
+                            <li class="step"><strong>Observe:</strong> Amati perilaku user di habitat aslinya tanpa
+                                intervensi.</li>
+                            <li class="step"><strong>Engage:</strong> Wawancara langsung untuk memahami motivasi & nilai
+                                user.</li>
+                            <li class="step"><strong>Immerse:</strong> Alami sendiri konteks & rasa sakit (pain) yang
+                                dialami user.</li>
+                        </ul>
+                        <div class="box amber step" style="margin-top:20px; padding:12px;">
+                            <p style="font-size: 14px; color: var(--accent2);"><strong>💡 Pro Tip: Extreme
+                                    Users</strong><br>
+                                Jangan hanya wawancara user "rata-rata". Wawancarai *power user* dan *non-user* (orang
+                                yang gaptek) untuk insight yang lebih radikal.</p>
+                        </div>
+                    </div>
+                    <div class="image-container" style="height: 100%;">
+                        <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=600&q=80"
+                            alt="UX Researcher conducting user interview">
+                        <div class="image-caption">UX Researcher at Work — User Interview</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── Slide 6: Desk vs Field Research (NEW) ─────── -->
+        <div class="slide">
+            <div class="content">
+                <h2>Sebelum ke Lapangan: Desk Research</h2>
+                <div class="split" style="gap: 28px;">
+                    <div class="box interactive step" style="padding: 24px; height: 100%;">
+                        <div class="tag amber" style="margin-bottom: 14px;"><i class="fa-solid fa-laptop"></i> Secondary
+                            (Desk) Research</div>
+                        <ul style="margin-top: 10px;">
+                            <li class="step">Analisis kompetitor.</li>
+                            <li class="step">Membaca ulasan App Store / Play Store.</li>
+                            <li class="step">Data analitik web (Google Analytics).</li>
+                            <li class="step">Log keluhan dari Customer Service.</li>
+                        </ul>
+                        <p style="font-size: 14px; color: var(--text-muted); margin-top: 16px; font-style: italic;">"Apa
+                            yang sudah kita ketahui dari data historis?"</p>
+                    </div>
+                    <div class="box accent interactive step" style="padding: 24px; height: 100%;">
+                        <div class="tag" style="margin-bottom: 14px;"><i class="fa-solid fa-users-viewfinder"></i>
+                            Primary (Field) Research</div>
+                        <ul style="margin-top: 10px;">
+                            <li class="step">Wawancara mendalam (In-depth Interview).</li>
+                            <li class="step">Survei & Kuesioner langsung.</li>
+                            <li class="step">Shadowing (mengikuti aktivitas user).</li>
+                        </ul>
+                        <p style="font-size: 14px; color: var(--text-muted); margin-top: 16px; font-style: italic;">"Apa
+                            yang belum kita ketahui dan harus ditanyakan ke user?"</p>
+                    </div>
+                </div>
+                <div class="stat-badge step" style="margin-top: 20px; display: flex; justify-content: center;">
+                    <i class="fa-solid fa-lightbulb"></i>
+                    Lakukan Desk Research DULU, baru turun ke Field Research agar wawancara lebih tajam.
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── Slide 7: The 5 Whys ───────────────────────── -->
+        <div class="slide">
+            <div class="content">
+                <h2>The 5 Whys Technique</h2>
+                <p style="color: var(--text-muted); font-size: 17px; margin-bottom: 18px;">Tanyakan "Kenapa" sebanyak 5
+                    kali untuk menemukan <strong style="color:var(--text);">akar masalah</strong> yang sebenarnya.</p>
+                <div class="box" style="padding: 20px 24px;">
+                    <p
+                        style="font-size: 15px; color: var(--text-muted); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">
+                        Kasus: User tidak mau pakai M-Banking</p>
+                    <div class="why-chain">
+                        <div class="why-item">
+                            <span class="why-num">WHY 1</span>
+                            <span>"Karena membingungkan."</span>
+                        </div>
+                        <div class="why-item">
+                            <span class="why-num">WHY 2</span>
+                            <span>"Terlalu banyak menu di halaman utama."</span>
+                        </div>
+                        <div class="why-item">
+                            <span class="why-num">WHY 3</span>
+                            <span>"Karena semua fitur ditaruh di depan."</span>
+                        </div>
+                        <div class="why-item">
+                            <span class="why-num">WHY 4</span>
+                            <span>"Karena bank ingin memamerkan semua produknya."</span>
+                        </div>
+                        <div class="why-item root">
+                            <span class="why-num">ROOT</span>
+                            <span><strong>"Bank tidak fokus pada kebutuhan harian user." ← Akar Masalah</strong></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── Slide 7: Research Bias ────────────────────── -->
+        <div class="slide">
+            <div class="content">
+                <h2>Beware: Research Bias</h2>
+                <div class="split">
+                    <div class="box">
+                        <div class="tag amber" style="margin-bottom: 14px;">Confirmation Bias</div>
+                        <p style="font-size: 17px; color: var(--text-muted); line-height: 1.6;">Hanya mencari jawaban
+                            yang mendukung ide kita sendiri. Kita hanya mendengar apa yang ingin kita dengar.</p>
+                        <div class="stat-badge" style="margin-top: 16px;">
+                            <i class="fa-solid fa-triangle-exclamation" style="color: var(--accent2);"></i>
+                            Sangat umum terjadi di riset awal
+                        </div>
+                    </div>
+                    <div class="box">
+                        <div class="tag amber" style="margin-bottom: 14px;">Leading Questions</div>
+                        <p style="font-size: 17px; color: var(--text-muted); line-height: 1.6;">Pertanyaan yang menyetir
+                            atau memaksakan jawaban tertentu dari user.</p>
+                        <div class="box amber" style="margin-top: 14px; padding: 14px 18px;">
+                            <p style="font-size: 14px; color: var(--accent2);"><strong>Salah:</strong> "Aplikasi ini
+                                mudah digunakan, kan?"</p>
+                            <p style="font-size: 14px; color: var(--text-muted); margin-top: 8px;"><strong
+                                    style="color:var(--success);">Benar:</strong> "Ceritakan pengalamanmu memakai
+                                aplikasi ini."</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── Slide 8: Discussion ────────────────────────── -->
+        <div class="slide">
+            <div class="content">
+                <div class="tag green"><i class="fa-solid fa-comments"></i> Bahan Diskusi</div>
+                <h2>The Waiting Room Case</h2>
+                <div class="split">
+                    <div class="image-container" style="height: 380px;">
+                        <img src="https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=600&q=80"
+                            alt="Orang menunggu di antrean">
+                        <div class="image-caption">Orang Menunggu di Ruang Tunggu</div>
+                    </div>
+                    <div>
+                        <p style="font-size: 22px; font-weight: 500; line-height: 1.4; margin-bottom: 20px;">"Kenapa
+                            orang sangat benci menunggu di antrean?"</p>
+                        <div class="box accent" style="padding: 22px;">
+                            <h3
+                                style="color: var(--accent); font-size: 13px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 14px;">
+                                <i class="fa-solid fa-clock"></i> Diskusi 5 Menit
+                            </h3>
+                            <ul style="margin-top: 0;">
+                                <li>Apa yang mereka <strong>rasakan</strong> (Feels)?</li>
+                                <li>Apa yang mereka <strong>pikirkan</strong> (Thinks)?</li>
+                                <li>Apa solusi selain menggunakan aplikasi?</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── Slide 9: Empathy Map Framework ───────────── -->
+        <div class="slide">
+            <div class="content">
+                <h2>Empathy Map</h2>
+                <div class="split">
+                    <div class="image-container" style="height: 440px;">
+                        <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&q=80"
+                            alt="Team Brainstorming - Empathy Mapping Session">
+                        <div class="image-caption">Empathy Mapping Session</div>
+                    </div>
+                    <div>
+                        <p style="color: var(--text-muted); font-size: 16px; margin-bottom: 16px;">Empathy Map memetakan
+                            perspektif user dari 4 dimensi psikologis.</p>
+                        <div class="em-grid">
+                            <div class="em-card says">
+                                <h3>Says</h3>
+                                <p>"Saya mau yang cepat dan simpel."</p>
+                            </div>
+                            <div class="em-card thinks">
+                                <h3>Thinks</h3>
+                                <p>"Apakah data saya aman di sini?"</p>
+                            </div>
+                            <div class="em-card does">
+                                <h3>Does</h3>
+                                <p>Mengecek saldo berulang kali.</p>
+                            </div>
+                            <div class="em-card feels">
+                                <h3>Feels</h3>
+                                <p>Frustrasi saat loading lama.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── Slide 10: Contoh Empathy Map ─────────────── -->
+        <div class="slide">
+            <div class="content">
+                <div class="tag">Contoh</div>
+                <h2>Contoh Empathy Map</h2>
+                <div style="display: flex; justify-content: center; align-items: center; flex: 1;">
+                    <div class="image-container" style="max-width: 680px; height: 420px; width: 100%;">
+                        <img src="img/empathy_map_example.png" alt="Contoh Empathy Map"
+                            style="object-fit: contain; padding: 16px;"
+                            onerror="this.parentElement.innerHTML='<div style=\'text-align:center; color:var(--text-muted); padding: 40px;\'><i class=\'fa-solid fa-image-slash\' style=\'font-size:48px;opacity:0.3;display:block;margin-bottom:16px;\'></i><p style=\'font-size:15px;\'>Tambahkan file <code style=\'color:var(--accent); font-family:monospace;\'>img/empathy_map_example.png</code> ke folder chapter2/img/</p></div>'">
+                    </div>
+                </div>
+                <div class="box accent" style="margin-top: 16px; text-align: center; padding: 14px;">
+                    <p style="font-size: 16px; color: var(--text-muted);">Empathy Map membantu kita memahami user dari 4
+                        perspektif: <strong style="color:var(--text);">Says · Thinks · Does · Feels</strong></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── Slide 11: User Persona ────────────────────── -->
+        <div class="slide">
+            <div class="content">
+                <h2>User Persona</h2>
+                <div class="split">
+                    <div class="image-container" style="height: 420px;">
+                        <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?w=600&q=80"
+                            alt="User Persona - Team discussing target user">
+                        <div class="image-caption">Team discussing Target User Profile</div>
+                    </div>
+                    <div>
+                        <p style="font-size: 19px; color: var(--text-muted); line-height: 1.6; margin-bottom: 20px;">
+                            Persona membantu kita mendesain untuk <strong style="color:var(--text);">orang yang
+                                spesifik</strong>, bukan untuk imajinasi atau asumsi.</p>
+                        <div class="box" style="padding: 22px;">
+                            <h3
+                                style="color: var(--accent); font-size: 13px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 14px;">
+                                Komponen Persona</h3>
+                            <ul style="margin-top: 0;">
+                                <li><strong>Bio & Demografi:</strong> Latar belakang user secara umum.</li>
+                                <li><strong>Goals:</strong> Motivasi & tujuan utama user.</li>
+                                <li><strong>Pain Points:</strong> Hambatan & frustrasi terbesar user.</li>
+                                <li><strong>Behaviors:</strong> Kebiasaan & pola penggunaan digital.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── Slide 12: Contoh User Persona ────────────── -->
+        <div class="slide">
+            <div class="content">
+                <div class="tag">Contoh</div>
+                <h2>Contoh User Persona</h2>
+                <div style="display: flex; justify-content: center; align-items: center; flex: 1;">
+                    <div class="image-container" style="max-width: 680px; height: 420px; width: 100%;">
+                        <img src="img/user_persona_example.png" alt="Contoh User Persona"
+                            style="object-fit: contain; padding: 16px;"
+                            onerror="this.parentElement.innerHTML='<div style=\'text-align:center; color:var(--text-muted); padding: 40px;\'><i class=\'fa-solid fa-image-slash\' style=\'font-size:48px;opacity:0.3;display:block;margin-bottom:16px;\'></i><p style=\'font-size:15px;\'>Tambahkan file <code style=\'color:var(--accent); font-family:monospace;\'>img/user_persona_example.png</code> ke folder chapter2/img/</p></div>'">
+                    </div>
+                </div>
+                <div class="box accent" style="margin-top: 16px; text-align: center; padding: 14px;">
+                    <p style="font-size: 16px; color: var(--text-muted);">User Persona merangkum: <strong
+                            style="color:var(--text);">Bio · Goals · Pain Points</strong> sebagai ringkasan dari riset
+                        dan Affinity Diagram.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── Slide 13: Empathy Map vs Persona ─────────── -->
+        <div class="slide">
+            <div class="content">
+                <h2>Empathy Map vs Persona</h2>
+                <div class="split" style="gap: 28px; margin-bottom: 24px;">
+                    <div class="box interactive" style="padding: 28px; height: 100%;">
+                        <div class="tag" style="margin-bottom: 14px;"><i class="fa-solid fa-map"></i> Empathy Map</div>
+                        <p style="font-size: 18px; font-weight: 500; margin-bottom: 12px; color: var(--text);">Fokus
+                            pada <strong>keadaan emosional</strong> user di satu momen/konteks tertentu.</p>
+                        <p style="font-size: 16px; color: var(--text-muted); font-style: italic;">"Apa yang mereka
+                            rasakan <u>saat ini</u>?"</p>
+                        <div class="stat-badge">
+                            <i class="fa-solid fa-clock"></i>
+                            Digunakan saat fase riset
+                        </div>
+                    </div>
+                    <div class="box accent interactive" style="padding: 28px; height: 100%;">
+                        <div class="tag" style="margin-bottom: 14px;"><i class="fa-solid fa-user-circle"></i> User
+                            Persona</div>
+                        <p style="font-size: 18px; font-weight: 500; margin-bottom: 12px; color: var(--text);">Fokus
+                            pada <strong>identitas & pola perilaku</strong> jangka panjang.</p>
+                        <p style="font-size: 16px; color: var(--text-muted); font-style: italic;">"Siapa <u>orang
+                                ini</u> secara keseluruhan?"</p>
+                        <div class="stat-badge">
+                            <i class="fa-solid fa-compass-drafting"></i>
+                            Digunakan sebagai panduan tim
+                        </div>
+                    </div>
+                </div>
+                <div class="box highlight interactive" style="text-align: center; padding: 16px;">
+                    <p style="font-size: 18px; color: var(--text-muted);"><strong style="color:var(--text);">Gunakan
+                            keduanya:</strong> Empathy Map untuk menemukan insight, Persona untuk mengkomunikasikan
+                        insight tersebut ke tim.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── Slide 14: Affinity Diagram (NEW) ─────────── -->
+        <div class="slide">
+            <div class="content">
+                <h2>Affinity Diagram</h2>
+                <div class="split wide">
+                    <div>
+                        <p style="font-size: 18px; line-height: 1.6; color: var(--text-muted); margin-bottom: 20px;">
+                            Setelah melakukan riset dan mengumpulkan ratusan insight (dari interview & observasi),
+                            <strong style="color:var(--text);">bagaimana cara kita merangkumnya?</strong>
+                        </p>
+                        <div class="box interactive" style="padding: 20px;">
+                            <h3
+                                style="color: var(--accent); font-size: 14px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 12px;">
+                                <i class="fa-solid fa-layer-group"></i> Apa itu Affinity Diagram?
+                            </h3>
+                            <p style="font-size: 16px; color: var(--text-muted);">Metode untuk mengelompokkan data
+                                empiris yang tersebar (sticky notes) ke dalam <strong
+                                    style="color:var(--text);">tema-tema besar</strong> berdasarkan kemiripan pola.</p>
+                        </div>
+                        <ul style="margin-top: 16px;">
+                            <li class="step">Identifikasi Pola Perilaku.</li>
+                            <li class="step">Menemukan Pain Point yang paling sering muncul.</li>
+                            <li class="step">Sebagai jembatan dari Data Mentah (Riset) menuju perumusan target user
+                                (User Persona).</li>
+                        </ul>
+                    </div>
+                    <div class="image-container" style="height: 100%;">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80"
+                            alt="Affinity Mapping with Sticky Notes">
+                        <div class="image-caption">Affinity Mapping in Progress</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── Slide 15: User Persona ────────────────────── -->
+        <div class="slide">
+            <div class="content">
+                <h2>User Persona</h2>
+                <div class="split">
+                    <div class="image-container" style="height: 420px;">
+                        <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?w=600&q=80"
+                            alt="User Persona - Team discussing target user">
+                        <div class="image-caption">Team discussing Target User Profile</div>
+                    </div>
+                    <div>
+                        <p style="font-size: 19px; color: var(--text-muted); line-height: 1.6; margin-bottom: 20px;">
+                            Persona membantu kita mendesain untuk <strong style="color:var(--text);">orang yang
+                                spesifik</strong>, bukan untuk imajinasi atau asumsi bebas.</p>
+                        <div class="box interactive" style="padding: 22px;">
+                            <h3
+                                style="color: var(--accent); font-size: 13px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 14px;">
+                                Komponen Utama Persona</h3>
+                            <ul style="margin-top: 0;">
+                                <li><strong>Bio & Demografi:</strong> Latar belakang user secara umum.</li>
+                                <li><strong>Goals:</strong> Motivasi & tujuan utama user.</li>
+                                <li><strong>Pain Points:</strong> Hambatan & frustrasi terbesar user.</li>
+                                <li><strong>Behaviors:</strong> Kebiasaan & pola penggunaan digital.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── Slide 16: Lab Session ─────────────────────── -->
+        <div class="slide">
+            <div class="content">
+                <div class="tag green"><i class="fa-solid fa-flask"></i> Lab Session 02</div>
+                <h2>Empathy Workshop</h2>
+                <div class="split">
+                    <div class="image-container" style="height: 380px;">
+                        <img src="https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=600&q=80"
+                            alt="UX Workshop dengan Sticky Notes">
+                        <div class="image-caption">Workshop — Empathy Mapping in Action</div>
+                    </div>
+                    <div>
+                        <div class="box interactive" style="padding: 24px; height: fit-content;">
+                            <h3
+                                style="color: var(--accent); font-size: 13px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 16px;">
+                                <i class="fa-solid fa-users"></i> Tugas Kelompok
+                            </h3>
+                            <ol>
+                                <li class="step">Tentukan <strong>1 masalah kampus</strong> (Parkir, KRS, atau Kantin).
+                                </li>
+                                <li class="step">Wawancara <strong>2 mahasiswa</strong> menggunakan teknik <strong>5
+                                        Whys</strong>.</li>
+                                <li class="step">Buat <strong>Empathy Map</strong> di Figma berdasarkan hasil interview.
+                                </li>
+                                <li class="step">Definisikan <strong>1 Pain Point utama</strong> untuk dibahas minggu
+                                    depan.</li>
+                            </ol>
+                        </div>
+                        <div class="due-badge">
+                            <i class="fa-solid fa-calendar-check"></i>
+                            Due: Next Week — Submit Figma Link
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── Slide 17: Closing ─────────────────────────── -->
+        <div class="slide">
+            <div class="slide-title-bg" style="right: auto; left: -80px; top: auto; bottom: -100px;"></div>
+            <div class="content" style="justify-content: center; align-items: center; text-align: center;">
+                <div class="tag" style="margin-bottom: 20px;"><i class="fa-solid fa-heart"></i> Penutup</div>
+                <div class="rule-highlight" style="font-size: 104px;">Stay<br>Human.</div>
+                <div class="box interactive" style="width: fit-content; margin: 28px auto 0; padding: 16px 36px;">
+                    <p style="font-size: 20px; color: var(--text-muted);">Next Week: <strong
+                            style="color:var(--text);">Define Phase & Problem Statement</strong></p>
+                </div>
+                <p
+                    style="margin-top: 24px; font-family: 'Syne', sans-serif; font-size: 16px; color: var(--text-muted); letter-spacing: 2px; text-transform: uppercase;">
+                    Desain yang bagus dimulai dari hati yang peduli.</p>
+            </div>
+            <div class="marquee" style="color: var(--accent);">
+                <div class="marquee-content">
+                    LISTEN MORE &nbsp;·&nbsp; OBSERVE BETTER &nbsp;·&nbsp; FEEL DEEPER &nbsp;·&nbsp; DESIGN SMARTER
+                    &nbsp;·&nbsp; LISTEN MORE &nbsp;·&nbsp; OBSERVE BETTER &nbsp;·&nbsp; FEEL DEEPER &nbsp;·&nbsp;
+                    DESIGN SMARTER &nbsp;·&nbsp;
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- CONTROLS -->
+    <div class="controls">
+        <button class="nav-btn" id="prevBtn">← Prev</button>
+        <button class="nav-btn" id="nextBtn"
+            style="background: var(--accent); border-color: var(--accent); color: #fff;">Next →</button>
+        <button class="nav-btn fs-toggle" id="fsBtn" title="Toggle Fullscreen">
+            <i class="fa-solid fa-expand"></i>
+        </button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalNum = slides.length;
+
+        document.getElementById('totalNum').textContent = totalNum;
+
+        function updateSlide() {
+            slides.forEach((slide, index) => {
+                slide.classList.remove('active');
+                if (index === currentSlide) {
+                    slide.classList.add('active');
+                    // Sembunyikan semua step di slide ini agar bisa di-reveal satu per satu
+                    const steps = slide.querySelectorAll('.step');
+                    steps.forEach(s => s.classList.remove('active-step'));
+                }
+            });
+            document.getElementById('currentNum').textContent = currentSlide + 1;
+            const pct = ((currentSlide + 1) / totalNum) * 100;
+            document.getElementById('progressBar').style.width = pct + '%';
+        }
+
+        function advanceNext() {
+            const currentSlideEl = slides[currentSlide];
+            const unrevealedSteps = currentSlideEl.querySelectorAll('.step:not(.active-step)');
+            if (unrevealedSteps.length > 0) {
+                // Tampilkan step berikutnya
+                unrevealedSteps[0].classList.add('active-step');
+            } else {
+                // Semua step sudah tampil, pindah ke slide berikutnya
+                if (currentSlide < totalNum - 1) {
+                    currentSlide++;
+                    updateSlide();
+                }
+            }
+        }
+
+        document.getElementById('nextBtn').addEventListener('click', advanceNext);
+
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            if (currentSlide > 0) { currentSlide--; updateSlide(); }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                advanceNext();
+                e.preventDefault();
+            }
+            if (e.key === 'ArrowLeft') {
+                if (currentSlide > 0) { currentSlide--; updateSlide(); }
+            }
+        });
+
+        // Fullscreen toggle
+        const fsBtn = document.getElementById('fsBtn');
+        fsBtn.addEventListener('click', () => {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            } else {
+                document.exitFullscreen();
+            }
+        });
+
+        document.addEventListener('fullscreenchange', () => {
+            const icon = fsBtn.querySelector('i');
+            icon.className = document.fullscreenElement ? 'fa-solid fa-compress' : 'fa-solid fa-expand';
+        });
+
+        updateSlide();
+    </script>
+</body>
+
+</html>
